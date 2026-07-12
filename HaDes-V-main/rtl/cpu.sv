@@ -17,8 +17,16 @@ module cpu (
     input logic external_interrupt_in,
     input logic timer_interrupt_in
 );
+    register_file rf_inst (
+    .read_address1(rs1),
+    .read_address2(rs2),
+    .write_address(rd),
+    .write_data(),
+    .read_data1(rd1),
+    .read_data2(rd2),
+    .write_enable(write_enable),
+    .clk(clk),
+);
 
-    // TODO: Delete the following line and implement this module.
-    ref_cpu golden(.*);
 
 endmodule

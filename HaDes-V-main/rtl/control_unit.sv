@@ -127,7 +127,56 @@ always_comb begin
             alu_control=4'b1001;
         end     
     end
+    // S type
+    if (op_code==7'b0100011) begin
+        reg_write=1'b0;
+        alu_src=1'b1;
+        mem_read=1'b0;
+        mem_write=1'b1;
+        mem_to_reg=1'b0;
+        branch=1'b0;
+        alu_control=4'b0000;
+    end
+    // B type
+    if (op_code==7'b1100011) begin
+        reg_write=1'b0;
+        alu_src=1'b0;
+        mem_read=1'b0;
+        mem_write=1'b0;
+        mem_to_reg=1'b0;
+        branch=1'b1;
+        if (fnct3==3'b000) begin
+            //beq
+            alu_control=4'b0001;
+        end
+        if (fnct3==3'b001) begin
+            //bne
+            alu_control=4'b0001;
+        end
+        if (fnct3==3'b100) begin
+            //blt
+            alu_control=4'b0011;
+        end
+        if (fnct3==3'b101) begin
+            //bge
+            alu_control=4'b0011;
+        end
+        if (fnct3==3'b110) begin
+            //bltu
+            alu_control=4'b0100;
+        end
+        if (fnct3==3'b111) begin    
+            //bgeu
+            alu_control=4'b0100;
+        end
+    end
+    //U type
+    if (op_code=7'b0110111) begin
+        //lui
+    end
+    if (op_code=7'b0010111) begin
+        //auipc
+    end
 end
-
     
 endmodule

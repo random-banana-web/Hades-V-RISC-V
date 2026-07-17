@@ -11,11 +11,6 @@ module cpu (
     input logic clk,
     input logic rst,
 
-    wishbone_interface.master memory_fetch_port,
-    wishbone_interface.master memory_mem_port,
-
-    input logic external_interrupt_in,
-    input logic timer_interrupt_in
 );
     register_file rf_inst (
     .read_address1(rs1),
@@ -26,6 +21,12 @@ module cpu (
     .read_data2(rd2),
     .write_enable(write_enable),
     .clk(clk),
+);
+decode_stage dec1 (
+    
+    
+);
+
 );
 
 

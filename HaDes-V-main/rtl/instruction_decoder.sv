@@ -10,21 +10,21 @@
 module instruction_decoder (
     input  logic [31:0] instruction_in,
     output logic [6:0]  op_code,
-    output logic [2:0]  funct3,
-    output logic [6:0]  funct7,
+    output logic [2:0]  fnct3,
+    output logic [6:0]  fnct7,
     output logic [4:0]  rs1,
     output logic [4:0]  rs2,
     output logic [4:0]  rd,
     output logic [31:0] imm
 );
     assign op_code=instruction_in[6:0];
-    assign funct3=instruction_in[14:12];
+    assign fnct3=instruction_in[14:12];
     assign rs1=instruction_in[19:15];
-    imm=32'b0;
     always_comb begin
+     imm=32'b0;
      // R type
     if (op_code==7'b0110011) begin
-         funct7=instruction_in[31:25];
+         fnct7=instruction_in[31:25];
          rd=instruction_in[11:7];
          rs2=instruction_in[24:20];
     end

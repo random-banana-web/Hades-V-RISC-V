@@ -38,7 +38,7 @@ always@(posedge clk)
             end
     end
 
-    // TODO: Delete the following line and implement this module.
+    
     
 
 endmodule

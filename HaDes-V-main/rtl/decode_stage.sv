@@ -13,7 +13,7 @@
     output logic mem_read,
     output logic jump, 
     output logic branch,
-    output logic [1:0]alu_src,
+    output logic [1:0] alu_src,
     output logic [3:0] alu_control, 
     output logic [1:0] result_src, 
     output logic [2:0] fnct3

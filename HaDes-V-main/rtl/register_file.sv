@@ -18,7 +18,8 @@ module register_file (
     // write port
     input  logic [4:0]  write_address, //rd
     input  logic [31:0] write_data,
-    input  logic        write_enable
+    input  logic        write_enable,
+    input logic clk
 );
 logic [31:0] reg_file [0:31];
 assign read_data1=reg_file[read_address1];

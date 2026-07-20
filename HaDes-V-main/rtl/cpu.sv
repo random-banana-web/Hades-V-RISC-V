@@ -23,7 +23,7 @@
         logic [1:0] result_src;
         logic [1:0] alu_src;
         logic [2:0] fnct3;
-        logic write_enable; //placeholder untill WB stage is complete
+        logic write_enable; //placeholder untill WB stage is complete   
 
         logic [31:0] rd1_out_e;
         logic [31:0] rd2_out_e;

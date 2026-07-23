@@ -1,13 +1,8 @@
-/* Copyright (c) 2024 Tobias Scheipel, David Beikircher, Florian Riedl
- * Embedded Architectures & Systems Group, Graz University of Technology
- * SPDX-License-Identifier: MIT
- * ---------------------------------------------------------------------
- * File: register_file.sv
- */
 
 
 
-module register_file (
+module register_file 
+(
     input logic clk,
     input logic rst,
     // read ports
@@ -18,8 +13,7 @@ module register_file (
     // write port
     input  logic [4:0]  write_address, //rd
     input  logic [31:0] write_data,
-    input  logic        write_enable,
-    input logic clk
+    input  logic        write_enable
 );
 logic [31:0] reg_file [0:31];
 assign read_data1=reg_file[read_address1];

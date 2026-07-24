@@ -46,3 +46,22 @@ Computes address `rs1 + imm`, reads from memory, writes result to `rd`.
 | lhu         | 101    | load halfword, zero-ext |
 
 For alu_control purposes, all loads just use `ALU_ADD` (`0000`) to compute the address — funct3 here is instead consumed by memory_stage.sv to decide how much data to read and whether to sign- or zero-extend it, not by the ALU.
+markdown
+## Control Signal Reference
+
+### `result_src` — WB stage mux select (2 bits)
+
+| Value | Meaning | Used by |
+|-------|---------|---------|
+| `00` | ALU result | R-type, I-type ALU-imm |
+| `01` | Memory data (load) | Load instructions |
+| `10` | PC + 4 | JAL, JALR |
+| `11` | Immediate | LUI |
+
+### `alu_src` — ALU operand select (2 bits)
+
+| Value | Operand A | Operand B | Used by |
+|-------|-----------|-----------|---------|
+| `00` | `rs1` | `rs2` | R-type |
+| `01` | `rs1` | `imm` | I-type ALU-imm, loads, stores |
+| `10` | `PC` | `imm` | AUIPC, branches, JAL |

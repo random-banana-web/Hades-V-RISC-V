@@ -1,40 +1,47 @@
-/* Copyright (c) 2024 Tobias Scheipel, David Beikircher, Florian Riedl
- * Embedded Architectures & Systems Group, Graz University of Technology
- * SPDX-License-Identifier: MIT
- * ---------------------------------------------------------------------
- * File: execute_stage.sv
- */
+    module execute_stage 
+    import pipeline_types::*;
+    (
+        input decode_bus_t exe_in,
+        output exe_bus_t exe_out
+    );
+    logic [31:0] alu_operand_A;
+    logic [31:0] alu_operand_B;
+    logic        alu_result_src; //mux control signal for alu_result
+    logic [31:0] alu_result_mainALU; //result from mainALU
+    logic [31:0] alu_result_sideALU; //result from side pc+immaALU
+    logic [31:0] alu_result;
+
+    // assigning alu operandA and alu_src
+    assign alu_operand_A=exe_in.rd1_out;
+    always_comb begin
+        case (exe_in.alu_src)
+            2'b00:  alu_operand_B=exe_in.rd2_out;  //rs1&rs2
+            2'b01:  alu_operand_B=exe_in.imm;   //rs1&imm 
+            default: alu_operand_B='x;   //default
+        endcase
+    end
+
+        
+    // main ALU
+    always_comb begin
+        case (exe_in.alu_control)
+            4'b0000: alu_result_mainALU=alu_operand_A+alu_operand_B; //add
+            4'b0001: alu_result_mainALU=alu_operand_A-alu_operand_B;//sub
+            4'b0010: alu_result_mainALU=alu_operand_A<<alu_operand_B[4:0];//sll
+            4'b0011: alu_result_mainALU=$signed(alu_operand_A)<$signed(alu_operand_B);//slt
+            4'b0100: alu_result_mainALU=alu_operand_A<alu_operand_B;//sltu
+            4'b0101: alu_result_mainALU=alu_operand_A^alu_operand_B;//xor
+            4'b0110: alu_result_mainALU=alu_operand_A>>alu_operand_B[4:0];//srl
+            4'b0111: alu_result_mainALU=$signed(alu_operand_A)>>>alu_operand_B[4:0];//sra
+            4'b1000: alu_result_mainALU=alu_operand_A|alu_operand_B;//or
+            4'b1001: alu_result_mainALU=alu_operand_A&alu_operand_B;//and
+            default: alu_result_mainALU='x;
+        endcase
+    end
+        
+    // side pc+imm ALU
+    assign alu_result_sideALU= /*TODOpc*/ +exe_in.imm;
+    
 
 
-
-module execute_stage (
-    input logic clk,
-    input logic rst,
-
-    // Inputs
-    input logic [31:0]   rs1_data_in,
-    input logic [31:0]   rs2_data_in,
-    input instruction::t instruction_in,
-    input logic [31:0]   program_counter_in,
-
-    // Outputs
-    output logic [31:0]   source_data_reg_out,
-    output logic [31:0]   rd_data_reg_out,
-    output instruction::t instruction_reg_out,
-    output logic [31:0]   program_counter_reg_out,
-    output logic [31:0]   next_program_counter_reg_out,
-    output forwarding::t  forwarding_out,
-
-    // Pipeline control
-    input  pipeline_status::forwards_t  status_forwards_in,
-    output pipeline_status::forwards_t  status_forwards_out,
-    input  pipeline_status::backwards_t status_backwards_in,
-    output pipeline_status::backwards_t status_backwards_out,
-    input  logic [31:0] jump_address_backwards_in,
-    output logic [31:0] jump_address_backwards_out
-);
-
-    // TODO: Delete the following line and implement this module.
-    ref_execute_stage golden(.*);
-
-endmodule
+    endmodule

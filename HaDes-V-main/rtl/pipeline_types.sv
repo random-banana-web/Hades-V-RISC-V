@@ -16,4 +16,10 @@ package pipeline_types;
         logic [1:0]  result_src;
         logic [2:0]  fnct3;
     } decode_bus_t;
+
+    typedef struct packed {
+        
+
+        
+    } exe_bus_t;
 endpackage

@@ -13,6 +13,7 @@
 
     // assigning alu operandA and alu_src
     assign alu_operand_A=exe_in.rd1_out;
+    assign alu_result_src=exe_in.alu_result_src;
     always_comb begin
         case (exe_in.alu_src)
             2'b00:  alu_operand_B=exe_in.rd2_out;  //rs1&rs2

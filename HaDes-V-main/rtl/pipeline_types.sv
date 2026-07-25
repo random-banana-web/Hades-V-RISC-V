@@ -15,11 +15,12 @@ package pipeline_types;
         logic [3:0]  alu_control;
         logic [1:0]  result_src;
         logic [2:0]  fnct3;
+        logic        alu_result_src;    
     } decode_bus_t;
 
     typedef struct packed {
         
 
-        
+
     } exe_bus_t;
 endpackage

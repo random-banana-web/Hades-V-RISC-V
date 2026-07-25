@@ -21,6 +21,7 @@
     assign decode_out.alu_control=alu_control;
     assign decode_out.result_src=result_src;
     assign decode_out.fnct3=fnct3;
+    assign decode_out.alu_result_src=alu_result_src;
     
         
     logic [6:0] op_code;
@@ -38,6 +39,7 @@
     logic [1:0]  alu_src;
     logic [3:0]  alu_control;
     logic [1:0]  result_src;
+    logic        alu_result_src;
 instruction_decoder id_inst (
     .instruction_in(instruction_in),
     .fnct3(fnct3),
@@ -59,7 +61,8 @@ control_unit control1 (
     .alu_control(alu_control),
     .alu_src(alu_src),
     .branch(branch),
-    .result_src(result_src)
+    .result_src(result_src),
+    .alu_result_src(alu_result_src)
 
 );
 

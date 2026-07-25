@@ -9,7 +9,8 @@ module control_unit (
     output logic [1:0]alu_src, // chooses if 2nd operand for alu comes from imm or another register
     output logic branch, // PC is reset if branch is taken
     output logic [3:0] alu_control, // to differentiate between diff instructions in a type
-    output logic [1:0] result_src //mux select signal for WB into rd 
+    output logic [1:0] result_src, //mux select signal for WB into rd 
+    output logic       alu_result_src // 
 
 );
 always_comb begin
@@ -22,6 +23,7 @@ always_comb begin
     alu_src    = 2'b00;
     alu_control= 4'b0000;
     result_src = 2'b00;
+    alu_result_src=1'b0;
 
     // R type
     if (op_code==7'b0110011) begin
@@ -220,6 +222,7 @@ always_comb begin
         jump=1'b0;
         alu_control=4'b0000; 
         result_src=2'b00;
+        alu_result_src=1'b1;
     end
     //J type
     else if(op_code==7'b1101111) begin

@@ -65,3 +65,10 @@ markdown
 | `00` | `rs1` | `rs2` | R-type |
 | `01` | `rs1` | `imm` | I-type ALU-imm, loads, stores |
 | `10` | `PC` | `imm` | AUIPC, branches, JAL |
+
+### `alu_result_src` — selects EX-stage result source (1 bit)
+
+| Value | Source | Used by |
+|-------|--------|---------|
+| `0` | Main ALU output | All instructions except AUIPC |
+| `1` | Side adder output (PC + imm) | AUIPC |

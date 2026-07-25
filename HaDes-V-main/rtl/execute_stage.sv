@@ -41,7 +41,12 @@
         
     // side pc+imm ALU
     assign alu_result_sideALU= /*TODOpc*/ +exe_in.imm;
+    always_comb begin
+        case(alu_result_src)
+            1'b0: alu_result=alu_result_mainALU;
+            1'b1: alu_result=alu_result_sideALU;
+        endcase
+    end
     
-
-
+    
     endmodule

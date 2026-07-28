@@ -19,7 +19,13 @@ package pipeline_types;
     } decode_bus_t;
 
     typedef struct packed {
-        
+        logic [31:0] alu_result;
+        logic        PCsrc;
+        logic        reg_write;
+        logic        mem_write;
+        logic        mem_read;
+        logic [1:0]  result_src;
+        logic [4:0]  rd;
 
 
     } exe_bus_t;

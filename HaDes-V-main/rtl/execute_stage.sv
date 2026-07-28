@@ -10,6 +10,11 @@
     logic [31:0] alu_result_mainALU; //result from mainALU
     logic [31:0] alu_result_sideALU; //result from side pc+immaALU
     logic [31:0] alu_result;
+    logic        zero_flag;
+    logic        less_than_flag;
+    logic        less_than_u;
+    logic        branch_taken;
+    logic        PCsrc;
 
     // assigning alu operandA and alu_src
     assign alu_operand_A=exe_in.rd1_out;
@@ -48,6 +53,22 @@
             1'b1: alu_result=alu_result_sideALU;
         endcase
     end
+    assign zero = (alu_operand_A == alu_operand_B);              // beq/bne — signed/unsigned does not matter
+    assign less_than = ($signed(alu_operand_A) < $signed(alu_operand_B));  // blt/bge — signed
+    assign less_than_u = (alu_operand_A < alu_operand_B);                    // bltu/bgeu — unsigned
     
+    always_comb begin 
+    
+        case (exe_in.fnct3)
+            3'b000:  branch_taken = zero_flag;           // beq            
+            3'b001:  branch_taken = ~zero_flag;          // bne
+            3'b100:  branch_taken = less_than_flag;      // blt
+            3'b101:  branch_taken = ~less_than_flag;     // bge
+            3'b110:  branch_taken = less_than_u;         // bltu
+            3'b111:  branch_taken = ~less_than_u;        // bgeu
+            default: branch_taken = 1'bx; 
+        endcase
+    end
+    assign PCsrc = exe_in.jump | (exe_in.branch & branch_taken);
     
     endmodule

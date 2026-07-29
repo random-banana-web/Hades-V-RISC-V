@@ -16,17 +16,17 @@ package pipeline_types;
         logic [1:0]  result_src;
         logic [2:0]  fnct3;
         logic        alu_result_src;    
+        // to add PC and PC+4 after making fetch stage
     } decode_bus_t;
 
     typedef struct packed {
         logic [31:0] alu_result;
-        logic        PCsrc;
         logic        reg_write;
         logic        mem_write;
         logic        mem_read;
         logic [1:0]  result_src;
         logic [4:0]  rd;
-
-
+        logic [2:0]  fnct3;
+        logic [31:0] store_data;
     } exe_bus_t;
 endpackage

@@ -2,7 +2,8 @@
     import pipeline_types::*;
     (
         input decode_bus_t exe_in,
-        output exe_bus_t exe_out
+        output exe_bus_t exe_out,
+        output logic PCsrc
     );
     logic [31:0] alu_operand_A;
     logic [31:0] alu_operand_B;
@@ -14,7 +15,8 @@
     logic        less_than_flag;
     logic        less_than_u;
     logic        branch_taken;
-    logic        PCsrc;
+    logic [31:0] store_data;
+    
 
     // assigning alu operandA and alu_src
     assign alu_operand_A=exe_in.rd1_out;
@@ -53,8 +55,8 @@
             1'b1: alu_result=alu_result_sideALU;
         endcase
     end
-    assign zero = (alu_operand_A == alu_operand_B);              // beq/bne — signed/unsigned does not matter
-    assign less_than = ($signed(alu_operand_A) < $signed(alu_operand_B));  // blt/bge — signed
+    assign zero_flag = (alu_operand_A == alu_operand_B);              // beq/bne — signed/unsigned does not matter
+    assign less_than_flag = ($signed(alu_operand_A) < $signed(alu_operand_B));  // blt/bge — signed
     assign less_than_u = (alu_operand_A < alu_operand_B);                    // bltu/bgeu — unsigned
     
     always_comb begin 
@@ -71,4 +73,12 @@
     end
     assign PCsrc = exe_in.jump | (exe_in.branch & branch_taken);
     
+    assign exe_out.alu_result=exe_in.alu_result;
+    assign exe_out.reg_write=exe_in.reg_write;
+    assign exe_out.mem_read=exe_in.mem_read;
+    assign exe_out.mem_write=exe_in.mem_write;
+    assign exe_out.result_src=exe_in.result_src;
+    assign exe_out.rd=exe_in.rd;
+    assign exe_out.fnct3=exe_in.fnct3;
+    assign exe_out.store_data=exe_in.rd2_out;
     endmodule

@@ -7,10 +7,13 @@
         
     );
         decode_bus_t decode_out;
-        decode_bus_t decode_out_e;
+        decode_bus_t decode_pr_out;
+        exe_bus_t exe_out;
+        exe_bus_t exe_pr_out;
         logic [31:0] instruction_in;
         logic [31:0] rd1;
         logic [31:0] rd2;
+        logic        PCsrc;
         logic write_enable; //placeholder untill WB stage is complete   
 
         
@@ -29,7 +32,7 @@
         .clk(clk),
         .rst(rst),
         .decode_in(decode_out),
-        .decode_out_e(decode_out_e)
+        .decode_pr_out(decode_pr_out)
     );
 
     decode_stage decoder_inst (
@@ -37,6 +40,17 @@
         .decode_out(decode_out),
         .rd1(rd1),
         .rd2(rd2)
+        );
+        execute_stage execute_stage_inst(
+        .exe_in(decode_out),
+        .exe_out(exe_out),
+        .PCsrc(PCsrc)
+        );
+        exe_mem_pr exe_mem_pr1 (
+            .clk(clk),
+            .rst(rst),
+            .exe_pr_in(exe_out),
+            .exe_pr_out(exe_pr_out)
         );
     endmodule
         

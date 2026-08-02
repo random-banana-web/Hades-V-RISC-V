@@ -1,44 +1,32 @@
-/* Copyright (c) 2024 Tobias Scheipel, David Beikircher, Florian Riedl
- * Embedded Architectures & Systems Group, Graz University of Technology
- * SPDX-License-Identifier: MIT
- * ---------------------------------------------------------------------
- * File: memory_stage.sv
- */
-
-
-
 module memory_stage (
-    input logic clk,
-    input logic rst,
-
-    // Memory interface
-    wishbone_interface.master wb,
-
-    // Inputs
-    input logic [31:0]   source_data_in,
-    input logic [31:0]   rd_data_in,
-    input instruction::t instruction_in,
-    input logic [31:0]   program_counter_in,
-    input logic [31:0]   next_program_counter_in,
-
-    // Outputs
-    output logic [31:0]   source_data_reg_out,
-    output logic [31:0]   rd_data_reg_out,
-    output instruction::t instruction_reg_out,
-    output logic [31:0]   program_counter_reg_out,
-    output logic [31:0]   next_program_counter_reg_out,
-    output forwarding::t  forwarding_out,
-
-    // Pipeline control
-    input  pipeline_status::forwards_t  status_forwards_in,
-    output pipeline_status::forwards_t  status_forwards_out,
-    input  pipeline_status::backwards_t status_backwards_in,
-    output pipeline_status::backwards_t status_backwards_out,
-    input  logic [31:0] jump_address_backwards_in,
-    output logic [31:0] jump_address_backwards_out
+    input clk,
+    input exe_bus_t mem_in,
+    output mem_bus_t mem_out
 );
+logic [7:0] mem_ram [0:1023]; //1024 bytes. each byte is 8 bits. 
+logic mem_read;
+logic mem_write;
+logic [2:0]  fnct3;
+logic [31:0] store_data;
+logic [31:0] ram_out;
+assign mem_read=mem_in.mem_read;
+assign mem_write=mem_in.mem_write;
+assign fnct3=mem_in.fnct3;
+assign store_data=mem_in.store_data;
+if (mem_read==1 && mem_write==0) begin
+    // load
+    case (fnct3)
+        3'b000: //lb
+        3'b001: //lh
+        3'b010: //lw
+        3'b100: //lbu
+        3'b101: //lhu
+        default: 
+    endcase
+end
+else if (mem_read==0 && mem_write==1) begin
+    //store
+end
 
-    // TODO: Delete the following line and implement this module.
-    ref_memory_stage golden(.*);
 
 endmodule

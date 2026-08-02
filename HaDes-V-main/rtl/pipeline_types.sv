@@ -29,4 +29,8 @@ package pipeline_types;
         logic [2:0]  fnct3;
         logic [31:0] store_data;
     } exe_bus_t;
+
+    typedef struct packed {
+        
+    } mem_bus_t;
 endpackage

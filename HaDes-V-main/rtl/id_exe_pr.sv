@@ -9,7 +9,7 @@ import pipeline_types::*;
         );
             always_ff @( posedge clk ) begin     
                 if(rst)
-                    decode_pr_out <= 1'b0;
+                    decode_pr_out <= '0;
                 else
                     decode_pr_out<=decode_pr_in;
             end

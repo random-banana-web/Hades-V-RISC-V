@@ -1,15 +1,15 @@
-module exe_mem_pr 
+module mem_wb_pr 
 import pipeline_types::*;
 (
     input logic clk,
     input logic rst,
-    input exe_bus_t exe_pr_in,
-    output exe_bus_t exe_pr_out
+    input mem_bus_t mem_pr_in,
+    output mem_bus_t mem_pr_out
 );
     always_ff @( posedge clk ) begin     
                 if(rst)
-                    exe_pr_out <= '0;
+                    mem_pr_out <= '0;
                 else
-                    exe_pr_out<=exe_pr_in;
+                    mem_pr_out<=mem_pr_in;
             end
 endmodule

@@ -31,6 +31,11 @@ package pipeline_types;
     } exe_bus_t;
 
     typedef struct packed {
-        
+        logic [31:0] alu_result;
+        logic        reg_write;
+        logic [1:0]  result_src;
+        logic [4:0]  rd;
+        logic [31:0] ram_out;
+
     } mem_bus_t;
 endpackage

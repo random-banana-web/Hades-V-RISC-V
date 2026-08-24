@@ -64,6 +64,10 @@
         .mem_pr_in(mem_out),
         .mem_pr_out(mem_pr_out)
     );
+    writeback_stage writeback_stage_inst(
+        .wb_in(mem_pr_out),
+        .
+    );
     endmodule
         
         

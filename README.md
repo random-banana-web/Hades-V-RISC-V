@@ -72,3 +72,16 @@ markdown
 |-------|--------|---------|
 | `0` | Main ALU output | All instructions except AUIPC |
 | `1` | Side adder output (PC + imm) | AUIPC |
+
+## PCsrc — fetch-stage PC select (1 bit)
+
+| Value | Meaning                          | Source                                      |
+|-------|-----------------------------------|----------------------------------------------|
+| 0     | Use PC + 4 (sequential fetch)     | Default, all non-control-flow instructions   |
+| 1     | Use branch/jump target address    | JAL, JALR, or taken branch                   |
+
+**Formula:** `PCsrc = jump | (branch & branch_taken)`
+
+- `jump` — asserted for JAL/JALR (unconditional redirect)
+- `branch & branch_taken` — asserted only when it's a branch instruction AND the comparator result says the condition holds
+- Exposed as a **plain output port** from `execute_stage` (not struct-carried) — routes directly as a sibling wire in `cpu.sv` to `fetch_stage`, since it needs to steer PC selection as immediately as possible rather than being pipelined through registers

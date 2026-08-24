@@ -22,6 +22,7 @@ assign mem_out.ram_out=ram_out;
 assign mem_out.alu_result=alu_result;
 assign mem_out.result_src=mem_in.result_src;
 assign mem_out.rd=mem_in.rd;
+assign mem_out.imm=mem_in.imm;
 always_comb begin 
     ram_out = 32'bx;
     if (mem_read==1 && mem_write==0) begin

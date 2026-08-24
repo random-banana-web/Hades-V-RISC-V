@@ -81,4 +81,5 @@
     assign exe_out.rd=exe_in.rd;
     assign exe_out.fnct3=exe_in.fnct3;
     assign exe_out.store_data=exe_in.rd2_out;
+    assign exe_out.imm=exe_in.imm;
     endmodule

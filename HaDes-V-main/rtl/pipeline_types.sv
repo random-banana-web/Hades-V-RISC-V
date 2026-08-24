@@ -28,6 +28,7 @@ package pipeline_types;
         logic [4:0]  rd;
         logic [2:0]  fnct3;
         logic [31:0] store_data;
+        logic [31:0] imm;
     } exe_bus_t;
 
     typedef struct packed {
@@ -36,6 +37,12 @@ package pipeline_types;
         logic [1:0]  result_src;
         logic [4:0]  rd;
         logic [31:0] ram_out;
+        logic [31:0] imm;
 
     } mem_bus_t;
+    typedef struct packed {
+        logic [31:0]  rd;
+        logic        reg_write;
+    } wb_bus_t;
+
 endpackage

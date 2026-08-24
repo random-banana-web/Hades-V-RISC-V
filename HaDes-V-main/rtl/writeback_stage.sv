@@ -1,37 +1,26 @@
-/* Copyright (c) 2024 Tobias Scheipel, David Beikircher, Florian Riedl
- * Embedded Architectures & Systems Group, Graz University of Technology
- * SPDX-License-Identifier: MIT
- * ---------------------------------------------------------------------
- * File: writeback_stage.sv
- */
-
-
-
-module writeback_stage (
-    input logic clk,
-    input logic rst,
-
-    // Inputs
-    input logic [31:0]   source_data_in,
-    input logic [31:0]   rd_data_in,
-    input instruction::t instruction_in,
-    input logic [31:0]   program_counter_in,
-    input logic [31:0]   next_program_counter_in,
-
-    // Interrupt signals
-    input logic external_interrupt_in,
-    input logic timer_interrupt_in,
-
-    // Outputs
-    output forwarding::t forwarding_out,
-
-    // Pipeline control
-    input  pipeline_status::forwards_t  status_forwards_in,
-    output pipeline_status::backwards_t status_backwards_out,
-    output logic [31:0] jump_address_backwards_out
+module writeback_stage 
+import pipeline_types::*;
+(
+    input mem_bus_t exe_in,
+    output wb_bus_t exe_out,
 );
+    logic [1:0] result_src;
+    logic [31:0] alu_result;
+    logic [31:0] ram_out;
+    logic [31:0] write_data;
+    logic [31:0] imm;
+    assign result_src=exe_in.result_src;
+    assign alu_result=exe_in.alu_result;
+    assign ram_out=exe_in.ram_out;
+    assign imm=exe_in.imm;
+    case (result_src)
+        2'b00: write_data=alu_result;
+        2'b01: write_data=ram_out;
+        2'b10: //TODO AFTER FETCH STAGE
+        2'b11: write_data=imm;
+        default: 
+    endcase
 
-    // TODO: Delete the following line and implement this module.
-    ref_writeback_stage golden(.*);
+    
 
 endmodule

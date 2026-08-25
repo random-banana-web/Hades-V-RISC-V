@@ -1,15 +1,16 @@
     module execute_stage 
     import pipeline_types::*;
     (
-        input decode_bus_t exe_in,
+        input  decode_bus_t exe_in,
         output exe_bus_t exe_out,
-        output logic PCsrc
+        output logic        PCsrc,          //gets routed to fetch stage 
+        output logic [31:0] target_address //gets routed to fetch stage 
     );
     logic [31:0] alu_operand_A;
     logic [31:0] alu_operand_B;
     logic        alu_result_src; //mux control signal for alu_result
     logic [31:0] alu_result_mainALU; //result from mainALU
-    logic [31:0] alu_result_sideALU; //result from side pc+immaALU
+    logic [31:0] alu_result_sideALU; //result from sideALU
     logic [31:0] alu_result;
     logic        zero_flag;
     logic        less_than_flag;
@@ -47,7 +48,7 @@
         endcase
     end
         
-    // side pc+imm ALU
+    // side ALU (pc+imm)
     assign alu_result_sideALU= /*TODOpc*/ +exe_in.imm;
     always_comb begin
         case(alu_result_src)
@@ -72,7 +73,7 @@
         endcase
     end
     assign PCsrc = exe_in.jump | (exe_in.branch & branch_taken);
-    
+    assign target_address=alu_result_sideALU; //routed to fetch stage
     assign exe_out.alu_result=exe_in.alu_result;
     assign exe_out.reg_write=exe_in.reg_write;
     assign exe_out.mem_read=exe_in.mem_read;

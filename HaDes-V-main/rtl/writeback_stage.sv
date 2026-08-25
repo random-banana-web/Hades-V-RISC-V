@@ -5,12 +5,12 @@ import pipeline_types::*;
     output logic write_address,
     output logic write_data,
     output logic write_enable,
-    output logic imm
 );
     logic [1:0] result_src;
     logic [31:0] alu_result;
     logic [31:0] ram_out;
     logic [31:0] write_data_internal;
+    logic [31:0] imm;
     assign result_src=wb_in.result_src;
     assign alu_result=wb_in.alu_result;
     assign ram_out=wb_in.ram_out;

@@ -17,14 +17,17 @@
         logic [31:0] rd1;
         logic [31:0] rd2;
         logic        PCsrc;
-        logic write_enable; //placeholder untill WB stage is complete   
+        logic [31:0] write_address;
+        logic [31:0] write_data;
+        logic [31:0] imm;
+        logic        write_enable; 
 
         
     register_file rf_inst (
         .read_address1(decode_out.rs1),
         .read_address2(decode_out.rs2),
-        .write_address(/*TODO*/),
-        .write_data( /*TODO*/ ),
+        .write_address(write_address),
+        .write_data(write_data),
         .read_data1(rd1),
         .read_data2(rd2),
         .write_enable(write_enable),
@@ -66,7 +69,9 @@
     );
     writeback_stage writeback_stage_inst(
         .wb_in(mem_pr_out),
-        .
+        .write_address(write_address),
+        .write_data(write_data),
+        .write_enable(write_enable),
     );
     endmodule
         

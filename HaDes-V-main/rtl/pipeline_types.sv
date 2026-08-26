@@ -16,7 +16,8 @@ package pipeline_types;
         logic [1:0]  result_src;
         logic [2:0]  fnct3;
         logic        alu_result_src;    
-        // to add PC and PC+4 after making fetch stage
+        logic [31:0] PC_out;
+        logic [31:0] PC_plus_4; 
     } decode_bus_t;
 
     typedef struct packed {
@@ -29,6 +30,7 @@ package pipeline_types;
         logic [2:0]  fnct3;
         logic [31:0] store_data;
         logic [31:0] imm;
+        logic [31:0] PC_plus_4;
     } exe_bus_t;
 
     typedef struct packed {
@@ -38,6 +40,7 @@ package pipeline_types;
         logic [4:0]  rd;
         logic [31:0] ram_out;
         logic [31:0] imm;
+        logic [31:0] PC_plus_4;
     } mem_bus_t;
 
 

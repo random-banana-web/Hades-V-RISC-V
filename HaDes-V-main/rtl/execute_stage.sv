@@ -17,6 +17,7 @@
     logic        less_than_u;
     logic        branch_taken;
     logic [31:0] store_data;
+    logic [31:0] PC_out;
     
 
     // assigning alu operandA and alu_src
@@ -49,7 +50,8 @@
     end
         
     // side ALU (pc+imm)
-    assign alu_result_sideALU= /*TODOpc*/ +exe_in.imm;
+    assign PC_out=exe_in.PC_out;
+    assign alu_result_sideALU= PC_out + exe_in.imm;
     always_comb begin
         case(alu_result_src)
             1'b0: alu_result=alu_result_mainALU;
@@ -83,4 +85,5 @@
     assign exe_out.fnct3=exe_in.fnct3;
     assign exe_out.store_data=exe_in.rd2_out;
     assign exe_out.imm=exe_in.imm;
+    assign exe_out.PC_plus_4=exe_in.PC_plus_4;
     endmodule

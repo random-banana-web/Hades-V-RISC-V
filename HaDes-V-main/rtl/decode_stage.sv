@@ -4,6 +4,8 @@
     input  logic [31:0] instruction_in,
     input logic [31:0] rd1,
     input logic [31:0] rd2,
+    input logic [31:0] PC_out;
+    input logic [31:0] PC_plus_4; 
     output decode_bus_t decode_out
 );
     assign decode_out.rd1_out=rd1;
@@ -22,6 +24,8 @@
     assign decode_out.result_src=result_src;
     assign decode_out.fnct3=fnct3;
     assign decode_out.alu_result_src=alu_result_src;
+    assign decode_out.PC_out=PC_out;
+    assign decode_out.PC_plus_4=PC_plus_4;
     
         
     logic [6:0] op_code;

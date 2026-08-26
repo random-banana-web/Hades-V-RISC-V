@@ -17,10 +17,13 @@
         logic [31:0] rd1;
         logic [31:0] rd2;
         logic        PCsrc;
+        logic [31:0] target_address;
         logic [31:0] write_address;
         logic [31:0] write_data;
         logic [31:0] imm;
         logic        write_enable; 
+        logic [31:0] PC_out;
+        logic [31:0] PC_plus_4;
 
         
     register_file rf_inst (
@@ -38,7 +41,9 @@
         .instruction_in(instruction_in),
         .decode_out(decode_out),
         .rd1(rd1),
-        .rd2(rd2)
+        .rd2(rd2),
+        .PC_out(PC_out),
+        .PC_plus_4(PC_plus_4)
         );
     id_exe_pr id_exe_pr_inst (
         .clk(clk),
@@ -49,7 +54,8 @@
     execute_stage execute_stage_inst(
         .exe_in(decode_out),
         .exe_out(exe_out),
-        .PCsrc(PCsrc)
+        .PCsrc(PCsrc),
+        .target_address(target_address)
         );
     exe_mem_pr exe_mem_pr_inst (
         .clk(clk),
@@ -72,6 +78,15 @@
         .write_address(write_address),
         .write_data(write_data),
         .write_enable(write_enable),
+    );
+    fetch_stage fetch_stage_inst(
+        .clk(clk),
+        .rst(rst),
+        .PCsrc(PCsrc),
+        .target_address(target_address),
+        .instruction_in(instruction_in),
+        .PC_out(PC_out),
+        .PC_plus_4(PC_plus_4)
     );
     endmodule
         

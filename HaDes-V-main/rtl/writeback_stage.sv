@@ -2,9 +2,9 @@ module writeback_stage
 import pipeline_types::*;
 (
     input mem_bus_t wb_in,
-    output logic write_address,
-    output logic write_data,
-    output logic write_enable,
+    output logic [4:0]  write_address,
+    output logic [31:0] write_data,
+    output logic        write_enable
 );
     logic [1:0] result_src;
     logic [31:0] alu_result;
@@ -19,12 +19,14 @@ import pipeline_types::*;
     assign write_enable=wb_in.reg_write;
     assign imm=wb_in.imm;
     assign write_address=wb_in.rd;
-    case (result_src)
-        2'b00: write_data_internal=alu_result;
-        2'b01: write_data_internal=ram_out;
-        2'b10: write_data_internal=PC_plus_4;
-        2'b11: write_data_internal=imm;
-    endcase
+    always_comb begin
+        case (result_src)
+            2'b00: write_data_internal=alu_result;
+            2'b01: write_data_internal=ram_out;
+            2'b10: write_data_internal=PC_plus_4;
+            2'b11: write_data_internal=imm;
+        endcase
+    end
     assign write_data=write_data_internal;
     
 

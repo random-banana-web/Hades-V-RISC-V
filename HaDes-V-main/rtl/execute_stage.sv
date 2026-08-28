@@ -63,7 +63,6 @@
     assign less_than_u = (alu_operand_A < alu_operand_B);                    // bltu/bgeu — unsigned
     
     always_comb begin 
-    
         case (exe_in.fnct3)
             3'b000:  branch_taken = zero_flag;           // beq            
             3'b001:  branch_taken = ~zero_flag;          // bne

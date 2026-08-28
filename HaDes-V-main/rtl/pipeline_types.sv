@@ -17,7 +17,8 @@ package pipeline_types;
         logic [2:0]  fnct3;
         logic        alu_result_src;    
         logic [31:0] PC_out;
-        logic [31:0] PC_plus_4; 
+        logic [31:0] PC_plus_4;
+        logic [31:0] alu_result; 
     } decode_bus_t;
 
     typedef struct packed {

@@ -4,8 +4,8 @@
     input  logic [31:0] instruction_in,
     input logic [31:0] rd1,
     input logic [31:0] rd2,
-    input logic [31:0] PC_out;
-    input logic [31:0] PC_plus_4; 
+    input logic [31:0] PC_out,
+    input logic [31:0] PC_plus_4,
     output decode_bus_t decode_out
 );
     assign decode_out.rd1_out=rd1;

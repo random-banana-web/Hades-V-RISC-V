@@ -8,7 +8,7 @@ module fetch_stage (
     output logic [31:0] instruction_in
 
 );
-logic [31:0] PC_plus_4;
+logic [31:0] PC_plus_4_wire;
 logic [31:0] PC_next;
 logic [31:0] PC_reg;
 logic [7:0] inst_mem [0:1023]; //instruction memory
@@ -22,12 +22,14 @@ always_ff @( posedge clk )
                     PC_out<=PC_reg;
     end
 assign instruction_in={inst_mem[PC_out+3],inst_mem[PC_out+2],inst_mem[PC_out+1],inst_mem[PC_out]};
-assign PC_plus_4=PC_out+4;
-
+assign PC_plus_4_wire=PC_out+4;
+assign PC_plus_4=PC_plus_4_wire;
 
 //mux
-case (PCsrc) 
-    1'b0: PC_next=PC_plus_4;
-    1'b1: PC_next=target_address;
-endcase
+always_comb begin
+    case (PCsrc) 
+        1'b0: PC_next=PC_plus_4_wire;
+        1'b1: PC_next=target_address;
+    endcase
+end
 endmodule

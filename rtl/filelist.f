@@ -12,4 +12,6 @@ C:\Users\Arnab\Downloads\HaDes-V-main\HaDes-V-main\rtl\mem_wb_pr.sv
 C:\Users\Arnab\Downloads\HaDes-V-main\HaDes-V-main\rtl\writeback_stage.sv
 C:\Users\Arnab\Downloads\HaDes-V-main\HaDes-V-main\rtl\register_file.sv
 C:\Users\Arnab\Downloads\HaDes-V-main\HaDes-V-main\rtl\cpu.sv
+C:\Users\Arnab\Downloads\HaDes-V-main\tb\cpu_tb.sv
+
 

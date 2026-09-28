@@ -17,7 +17,7 @@ logic [7:0] inst_mem [0:1023]; //instruction memory
 always_ff @( posedge clk ) 
     begin 
             if(rst)
-                    PC_reg <= '0;
+                    PC_out <= '0;
             else
                     PC_out<=PC_reg;
     end
@@ -31,5 +31,6 @@ always_comb begin
         1'b0: PC_next=PC_plus_4_wire;
         1'b1: PC_next=target_address;
     endcase
+    assign PC_reg=PC_next;
 end
 endmodule

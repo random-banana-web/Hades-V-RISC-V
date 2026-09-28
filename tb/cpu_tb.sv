@@ -20,8 +20,10 @@ module cpu_tb;
     rst = 0;
 
     // let it run some cycles
-    repeat (50) @(posedge clk);
+    repeat (50) @(posedge clk); 
     $display("x1 = %0d", dut.register_file_inst.reg_file[1]);
+    $display("x3 = %0d", dut.register_file_inst.reg_file[3]);
+
     $finish;
   end
 endmodule

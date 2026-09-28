@@ -1,4 +1,4 @@
-module tb_cpu;
+module cpu_tb;
   logic clk = 0;
   logic rst;
 
@@ -10,7 +10,9 @@ module tb_cpu;
   always #5 clk = ~clk;
 
   initial begin
-    $readmemh("sim\programs\test1.hex.txt", dut.fetch_stage_inst.inst_mem); 
+    $dumpfile("waves.vcd");
+    $dumpvars(0, cpu_tb);
+    $readmemh("sim/programs/test1.hex.txt", dut.fetch_stage_inst.inst_mem); 
 
     rst = 1;
     @(posedge clk);

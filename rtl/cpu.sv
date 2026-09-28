@@ -30,7 +30,7 @@
         logic [31:0] instruction_in_d;
 
         
-    register_file rf_inst (
+    register_file register_file_inst (
         .read_address1(decode_out.rs1),
         .read_address2(decode_out.rs2),
         .write_address(write_address),

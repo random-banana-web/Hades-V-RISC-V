@@ -23,6 +23,7 @@ module cpu_tb;
     repeat (50) @(posedge clk); 
     $display("x1 = %0d", dut.register_file_inst.reg_file[1]);
     $display("x3 = %0d", dut.register_file_inst.reg_file[3]);
+    $display("x4 = %0d", dut.register_file_inst.reg_file[4]);
 
     $finish;
   end

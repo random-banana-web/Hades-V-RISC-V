@@ -45,8 +45,45 @@ Computes address `rs1 + imm`, reads from memory, writes result to `rd`.
 | lbu         | 100    | load byte, zero-ext  |
 | lhu         | 101    | load halfword, zero-ext |
 
-For alu_control purposes, all loads just use `ALU_ADD` (`0000`) to compute the address — funct3 here is instead consumed by memory_stage.sv to decide how much data to read and whether to sign- or zero-extend it, not by the ALU.
-markdown
+### S-type (opcode `0100011`)
+
+| Instruction | funct3 | alu_control (4-bit) |
+|-------------|--------|---------------------|
+| sb          | 000    | `0000` |
+| sh          | 001    | `0000` |
+| sw          | 010    | `0000` |
+
+### B-type (opcode `1100011`)
+
+| Instruction | funct3 | alu_control (4-bit) | Condition |
+|-------------|--------|---------------------|-----------|
+| beq         | 000    | `0001` (sub)  | zero flag set |
+| bne         | 001    | `0001` (sub)  | zero flag clear |
+| blt         | 100    | `0011` (slt)  | result = 1 |
+| bge         | 101    | `0011` (slt)  | result = 0 |
+| bltu        | 110    | `0100` (sltu) | result = 1 |
+| bgeu        | 111    | `0100` (sltu) | result = 0 |
+
+Branch target = PC + imm from the side adder. `PCsrc` = branch taken, based on the condition column.
+
+### U-type
+
+| Instruction | opcode    | alu_control (4-bit) | Notes |
+|-------------|-----------|---------------------|-------|
+| lui         | `0110111` | `0000` | rd = 0 + imm (force rs1 to 0), or add a pass-imm op |
+| auipc       | `0010111` | X (don't care) | rd = PC + imm from the side adder via `alu_result_src` |
+
+No funct3 or funct7. The immediate is imm[31:12] shifted into the upper bits.
+
+### J-type
+
+| Instruction | opcode    | funct3 | alu_control (4-bit) | Notes |
+|-------------|-----------|--------|---------------------|-------|
+| jal         | `1101111` | —      | X (don't care) | target = PC + imm (side adder), rd = PC+4 |
+| jalr        | `1100111` | 000    | `0000` | target = rs1 + imm (main ALU), rd = PC+4 |
+
+jalr is technically I-type encoded, but it behaves like a jump, so it lives here.
+
 ## Control Signal Reference
 
 ### `result_src` — WB stage mux select (2 bits)

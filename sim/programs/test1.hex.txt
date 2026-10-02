@@ -1,79 +1,88 @@
-    //addi x1, x0, 5 
-    0x93
-    0x00
-    0x50
-    0x00
+    //addi x1, x0, -1
+93
+00
+F0
+FF
 
-    //addi x3, x0, 7
-    0x93
-    0x01
-    0x70
-    0x00
+//addi x2, x0, 32
+13
+01
+00
+02
 
-    // we add 3 NOP(no operations) between the 2nd addi and the add to prevent hazards otherwise the add will read stale value
-    // three times addi x0, x0, 0
-    0x13
-    0x00
-    0x00
-    0x00
+//addi x5, x0, 0x555
+93
+02
+50
+55
 
-    0x13
-    0x00
-    0x00
-    0x00
+// 3 NOPs
+13
+00
+00
+00
+13
+00
+00
+00
+13
+00
+00
+00
 
-    0x13
-    0x00
-    0x00
-    0x00
+//sw x5, 0(x2)
+23
+20
+51
+00
 
-    //add x4, x1, x3
-    0x33
-    0x82
-    0x30
-    0x00
+//sb x1, 0(x2)
+23
+00
+11
+00
 
-    //again 3 NOP
-    0x13
-    0x00
-    0x00
-    0x00
+//lw x6, 0(x2)
+03
+23
+01
+00
 
-    0x13
-    0x00
-    0x00
-    0x00
+//lb x3, 0(x2)
+83
+01
+01
+00
 
-    0x13
-    0x00
-    0x00
-    0x00
+//lbu x4, 0(x2)
+03
+42
+01
+00
 
-    //sw x1,0(x4) 
-    0x23
-    0x20
-    0x12
-    0x00    
-
-    //again 3 NOP
-    0x13
-    0x00
-    0x00
-    0x00
-
-    0x13
-    0x00
-    0x00
-    0x00
-
-    0x13
-    0x00
-    0x00
-    0x00
-
-    //lw x5, 0(x4)
-    0x83
-    0x22
-    0x02
-    0x00
+// 6 NOPs to drain the pipeline
+13
+00
+00
+00
+13
+00
+00
+00
+13
+00
+00
+00
+13
+00
+00
+00
+13
+00
+00
+00
+13
+00
+00
+00
 

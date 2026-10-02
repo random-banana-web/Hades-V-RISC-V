@@ -24,6 +24,9 @@ module cpu_tb;
     $display("x1 = %0d", dut.register_file_inst.reg_file[1]);
     $display("x3 = %0d", dut.register_file_inst.reg_file[3]);
     $display("x4 = %0d", dut.register_file_inst.reg_file[4]);
+    $display("x12 = %0d", dut.memory_stage_inst.mem_ram[12]);
+    $display("x5 = %0d", dut.register_file_inst.reg_file[5]);
+
 
     $finish;
   end

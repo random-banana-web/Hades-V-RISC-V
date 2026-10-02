@@ -76,7 +76,7 @@
         .decode_pr_out(decode_pr_out)
         );
     execute_stage execute_stage_inst(
-        .exe_in(decode_out),
+        .exe_in(decode_pr_out),
         .exe_out(exe_out),
         .PCsrc(PCsrc),
         .target_address(target_address)

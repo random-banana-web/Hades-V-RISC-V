@@ -118,6 +118,24 @@ jalr is technically I-type encoded, but it behaves like a jump, so it lives here
 
 **Formula:** `PCsrc = jump | (branch & branch_taken)`
 
+### Forwarding unit encoding (`fwd_a`, `fwd_b`)
+
+| Select | Source for the ALU operand | When it applies |
+|--------|----------------------------|-----------------|
+| `00` | Value read from the register file (via `id_exe_pr`) | No hazard
+| `01` | EX/MEM `alu_result` | Producer is in MEM (0-NOP gap) |
+| `10` | WB mux output (built from `mem_wb_pr`) | Producer is in WB (1-NOP gap) |
+| `11` | Unused 
+
+**Match condition (per operand, `rs` = `rs1` or `rs2`):**
+`producer.reg_write && producer.rd != 0 && producer.rd == id_exe.rs`
+
+**Priority:** EX/MEM (`01`) is checked first, because it holds the younger instruction. MEM/WB (`10`) only applies if EX/MEM did not match.
+
+**Not handled by forwarding:**
+- 2-NOP gap: handled in ID by a register file bypass (WB write data goes straight to the read port).
+- Load followed immediately by its consumer: needs a 1-cycle stall, since the data is not available until the end of MEM.
+
 - `jump` — asserted for JAL/JALR (unconditional redirect)
 - `branch & branch_taken` — asserted only when it's a branch instruction AND the comparator result says the condition holds
 - Exposed as a **plain output port** from `execute_stage` (not struct-carried) — routes directly as a sibling wire in `cpu.sv` to `fetch_stage`, since it needs to steer PC selection as immediately as possible rather than being pipelined through registers

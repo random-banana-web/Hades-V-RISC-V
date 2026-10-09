@@ -19,7 +19,12 @@
     logic [31:0] store_data;
     logic [31:0] PC_out;
     
-
+    /*case (x)
+        2'b00:
+        2'b01:
+        2'b10: 
+        default: 
+    endcase*/
     // assigning alu operandA and alu_src
     assign alu_operand_A=exe_in.rd1_out;
     assign alu_result_src=exe_in.alu_result_src;

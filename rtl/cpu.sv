@@ -28,6 +28,16 @@
         logic [31:0] PC_out_d;
         logic [31:0] PC_plus_4_d;
         logic [31:0] instruction_in_d;
+        logic [31:0] fwd_alu_result;
+        // forwarding unit
+        logic [4:0] id_exe_rs1;
+        logic [4:0] id_exe_rs2;
+        logic [4:0] exe_mem_rd;
+        logic       exe_mem_reg_write;
+        logic [4:0] mem_wb_rd;
+        logic       mem_wb_reg_write;
+        logic [1:0] fwd_1;
+        logic [1:0] fwd_2;
 
         
     register_file register_file_inst (
@@ -73,19 +83,28 @@
         .clk(clk),
         .rst(rst),
         .decode_pr_in(decode_out),
-        .decode_pr_out(decode_pr_out)
+        .decode_pr_out(decode_pr_out),
+        .id_exe_rs1(id_exe_rs1),
+        .id_exe_rs2(id_exe_rs2)
         );
     execute_stage execute_stage_inst(
         .exe_in(decode_pr_out),
         .exe_out(exe_out),
         .PCsrc(PCsrc),
-        .target_address(target_address)
+        .target_address(target_address),
+        .fwd_1(fwd_1),
+        .fwd_2(fwd_2),
+        .write_data(write_data),
+        .fwd_alu_result(fwd_alu_result)
         );
     exe_mem_pr exe_mem_pr_inst (
         .clk(clk),
         .rst(rst),
         .exe_pr_in(exe_out),
-        .exe_pr_out(exe_pr_out)
+        .exe_pr_out(exe_pr_out),
+        .exe_mem_rd(exe_mem_rd),
+        .exe_mem_reg_write(exe_mem_reg_write),
+        .fwd_alu_result(fwd_alu_result)
         );
     memory_stage memory_stage_inst(
         .clk(clk),
@@ -96,13 +115,25 @@
         .clk(clk),
         .rst(rst),
         .mem_pr_in(mem_out),
-        .mem_pr_out(mem_pr_out)
+        .mem_pr_out(mem_pr_out),
+        .mem_wb_rd(mem_wb_rd),
+        .mem_wb_reg_write(mem_wb_reg_write)
     );
     writeback_stage writeback_stage_inst(
         .wb_in(mem_pr_out),
         .write_address(write_address),
         .write_data(write_data),
         .write_enable(write_enable)
+    );
+    forwarding_unit forwarding_unit_inst(
+        .id_exe_rs1(id_exe_rs1),
+        .id_exe_rs2(id_exe_rs2),
+        .exe_mem_rd(exe_mem_rd),
+        .exe_mem_reg_write(exe_mem_reg_write),
+        .mem_wb_rd(mem_wb_rd),
+        .mem_wb_reg_write(mem_wb_reg_write)
+        .fwd_1(fwd_1),
+        .fwd_2(fwd_2)
     );
     
     endmodule

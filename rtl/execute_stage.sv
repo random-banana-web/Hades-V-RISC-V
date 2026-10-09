@@ -2,6 +2,10 @@
     import pipeline_types::*;
     (
         input  decode_bus_t exe_in,
+        input logic [1:0] fwd_1,
+        input logic [1:0] fwd_2,
+        input logic [31:0] write_data,      //coming in from wb output mux
+        input logic [31:0] fwd_alu_result,  //coming in from exe-mem pr
         output exe_bus_t exe_out,
         output logic        PCsrc,          //gets routed to fetch stage 
         output logic [31:0] target_address //gets routed to fetch stage 
@@ -18,21 +22,29 @@
     logic        branch_taken;
     logic [31:0] store_data;
     logic [31:0] PC_out;
+    logic [31:0] rs2_fwd;
     
-    /*case (x)
-        2'b00:
-        2'b01:
-        2'b10: 
-        default: 
-    endcase*/
-    // assigning alu operandA and alu_src
-    assign alu_operand_A=exe_in.rd1_out;
-    assign alu_result_src=exe_in.alu_result_src;
+    
     always_comb begin
+        case (fwd_1)
+        2'b00:alu_operand_A=exe_in.rd1_out;
+        2'b01:alu_operand_A=fwd_alu_result;
+        2'b10:alu_operand_A=write_data; 
+        default: alu_operand_A='x;
+        endcase
+        //forwarded rs2 value in case alu_operand_b is a reg
+        case (fwd_2)
+        2'b00:rs2_fwd=exe_in.rs2;
+        2'b01:rs2_fwd=fwd_alu_result;
+        2'b10:rs2_fwd=write_data; 
+        default: rs2_fwd='x;
+        endcase
+        // assigning alu operandA and alu_src
+        alu_result_src=exe_in.alu_result_src;
         case (exe_in.alu_src)
-            2'b00:  alu_operand_B=exe_in.rd2_out;  //rs1&rs2
-            2'b01:  alu_operand_B=exe_in.imm;   //rs1&imm 
-            default: alu_operand_B='x;   //default
+        2'b00:  alu_operand_B=rs2_fwd;  //rs1&rs2
+        2'b01:  alu_operand_B=exe_in.imm;   //rs1&imm 
+        default: alu_operand_B='x;   //default
         endcase
     end
 

@@ -131,7 +131,7 @@
         .exe_mem_rd(exe_mem_rd),
         .exe_mem_reg_write(exe_mem_reg_write),
         .mem_wb_rd(mem_wb_rd),
-        .mem_wb_reg_write(mem_wb_reg_write)
+        .mem_wb_reg_write(mem_wb_reg_write),
         .fwd_1(fwd_1),
         .fwd_2(fwd_2)
     );

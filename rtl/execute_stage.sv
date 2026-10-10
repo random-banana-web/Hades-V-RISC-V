@@ -34,7 +34,7 @@
         endcase
         //forwarded rs2 value in case alu_operand_b is a reg
         case (fwd_2)
-        2'b00:rs2_fwd=exe_in.rs2;
+        2'b00:rs2_fwd=exe_in.rd2_out;
         2'b01:rs2_fwd=fwd_alu_result;
         2'b10:rs2_fwd=write_data; 
         default: rs2_fwd='x;
@@ -99,7 +99,7 @@
     assign exe_out.result_src=exe_in.result_src;
     assign exe_out.rd=exe_in.rd;
     assign exe_out.fnct3=exe_in.fnct3;
-    assign exe_out.store_data=exe_in.rd2_out;
+    assign exe_out.store_data=rs2_fwd;
     assign exe_out.imm=exe_in.imm;
     assign exe_out.PC_plus_4=exe_in.PC_plus_4;
     endmodule

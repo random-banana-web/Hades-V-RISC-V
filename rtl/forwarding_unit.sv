@@ -1,15 +1,15 @@
 module forwarding_unit
 import pipeline_types::*;
-{
+(
     input logic [4:0] id_exe_rs1,
     input logic [4:0] id_exe_rs2,
     input logic [4:0] exe_mem_rd,
     input logic       exe_mem_reg_write,
     input logic [4:0] mem_wb_rd,
-    input logic       mem_wb_reg_write
+    input logic       mem_wb_reg_write,
     output logic [1:0] fwd_1,
     output logic [1:0] fwd_2
-};
+);
     always_comb 
         begin 
             fwd_1=2'b00;

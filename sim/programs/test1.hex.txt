@@ -3,12 +3,17 @@
 00
 50
 00
-//add x2, x1, x1        (0-gap, fwd 01)
+//nop
+13
+00
+00
+00
+//add x2, x1, x1        (1-gap, fwd 10)
 33
 81
 10
 00
-// 6 NOPs
+// 6 NOPs to drain
 13
 00
 00

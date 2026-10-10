@@ -22,12 +22,11 @@ module cpu_tb;
     // let it run some cycles
 
   repeat (80) @(posedge clk);
-  $display("x1  = %h", dut.register_file_inst.reg_file[1]);
   $display("x2  = %h", dut.register_file_inst.reg_file[2]);
-  $display("x3  = %h", dut.register_file_inst.reg_file[3]);
-  $display("x5  = %h", dut.register_file_inst.reg_file[5]);
+  $display("x4  = %h", dut.register_file_inst.reg_file[4]);
+  $display("x6  = %h", dut.register_file_inst.reg_file[6]);
+  $display("x7  = %h", dut.register_file_inst.reg_file[7]);
   $display("x10 = %h", dut.register_file_inst.reg_file[10]);
-  $display("x11 = %h", dut.register_file_inst.reg_file[11]);
   $finish;
 
   end

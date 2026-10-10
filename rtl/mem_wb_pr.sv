@@ -8,8 +8,8 @@ import pipeline_types::*;
     output logic [4:0] mem_wb_rd,
     output logic       mem_wb_reg_write
 );
-    assign mem_wb_rd= mem_pr_in.rd;
-    assign mem_wb_reg_write=mem_pr_in.reg_write;
+    assign mem_wb_rd= mem_pr_out.rd;
+    assign mem_wb_reg_write=mem_pr_out.reg_write;
     always_ff @( posedge clk ) begin     
                 if(rst)
                     mem_pr_out <= '0;

@@ -9,9 +9,9 @@ import pipeline_types::*;
     output logic       exe_mem_reg_write,
     output logic [31:0] fwd_alu_result
 );
-    assign exe_mem_rd=exe_pr_in.rd;
-    assign exe_mem_reg_write=exe_pr_in.reg_write;
-    assign alu_result=exe_pr_in.alu_result;
+    assign exe_mem_rd=exe_pr_out.rd;
+    assign exe_mem_reg_write=exe_pr_out.reg_write;
+    assign fwd_alu_result=exe_pr_out.alu_result;
     always_ff @( posedge clk ) begin     
                 if(rst)
                     exe_pr_out <= '0;

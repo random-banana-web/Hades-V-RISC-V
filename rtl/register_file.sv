@@ -1,6 +1,4 @@
 
-
-
 module register_file 
 (
     input logic clk,
@@ -16,8 +14,7 @@ module register_file
     input  logic        write_enable
 );
 logic [31:0] reg_file [0:31];
-assign read_data1=reg_file[read_address1];
-assign read_data2=reg_file[read_address2];
+
 always@(posedge clk)
     begin
         if(rst)
@@ -32,8 +29,24 @@ always@(posedge clk)
                 reg_file[write_address]<=write_data;
             end
     end
-
-    
-    
+always_comb 
+    begin 
+        if(read_address1==write_address && write_enable==1 && write_address!=0) //write_address!=0 to so that NOP does not trigger it
+        begin
+            read_data1=write_data;
+        end
+        else
+        begin
+            read_data1=reg_file[read_address1];
+        end
+        if(read_address2==write_address && write_enable==1 && write_address!=0)
+        begin
+            read_data2=write_data;
+        end
+        else
+        begin
+            read_data2=reg_file[read_address2];
+        end
+    end
 
 endmodule

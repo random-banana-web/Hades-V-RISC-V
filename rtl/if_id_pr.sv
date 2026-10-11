@@ -6,16 +6,26 @@ import pipeline_types::*;
     input  logic [31:0] PC_out,
     input  logic [31:0] PC_plus_4,
     input  logic [31:0] instruction_in,
+    input logic         load_use_stall, //hazard detection unit, causes stall if 1
     output logic [31:0] PC_out_d,
     output logic [31:0] PC_plus_4_d,
-    output logic [31:0] instruction_in_d   
+    output logic [31:0] instruction_in_d,  
+    output logic [4:0] if_id_rs1, //for hazard detection unit
+    output logic [4:0] if_id_rs2 //for hazard detection unit
 );
+    assign if_id_rs1=instruction_in_d[19:15];
+    assign if_id_rs2=instruction_in_d[24:20]; /*yes it may cause false positives for the bits may be that of
+     immediate and match the rd of load and cause 1 cycle stall for no reason so 1 cycle wasted but ans still correct*/
             always_ff @( posedge clk ) begin     
                 if(rst)
                     begin
                         PC_out_d<='0;
                         PC_plus_4_d<='0;
                         instruction_in_d<='0;
+                    end
+                else if(load_use_stall)
+                    begin
+                        //hold current values. stalled due to hazard detection unit
                     end
                 else
                     begin

@@ -14,4 +14,5 @@ C:\Users\Arnab\Downloads\HaDes-V-main\rtl\register_file.sv
 C:\Users\Arnab\Downloads\HaDes-V-main\rtl\cpu.sv
 C:\Users\Arnab\Downloads\HaDes-V-main\tb\cpu_tb.sv
 C:\Users\Arnab\Downloads\HaDes-V-main\rtl\forwarding_unit.sv
+C:\Users\Arnab\Downloads\HaDes-V-main\rtl\hazard_detection_unit.sv
 

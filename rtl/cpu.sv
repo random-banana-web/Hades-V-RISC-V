@@ -38,6 +38,12 @@
         logic       mem_wb_reg_write;
         logic [1:0] fwd_1;
         logic [1:0] fwd_2;
+        //hazard detection unit
+        logic [4:0] if_id_rs1;
+        logic [4:0] if_id_rs2;
+        logic [4:0] id_exe_rd;
+        logic       id_exe_mem_read;
+        logic      load_use_stall;
 
         
     register_file register_file_inst (
@@ -58,7 +64,8 @@
         .target_address(target_address),
         .instruction_in(instruction_in),
         .PC_out(PC_out),
-        .PC_plus_4(PC_plus_4)
+        .PC_plus_4(PC_plus_4),
+        .load_use_stall(load_use_stall)
     );
     if_id_pr if_id_pr_inst(
         .clk(clk),
@@ -68,7 +75,10 @@
         .instruction_in(instruction_in),
         .PC_out_d(PC_out_d),
         .PC_plus_4_d(PC_plus_4_d),
-        .instruction_in_d(instruction_in_d)
+        .instruction_in_d(instruction_in_d),
+        .load_use_stall(load_use_stall),
+        .if_id_rs1(if_id_rs1),
+        .if_id_rs2(if_id_rs2)
 
     );
     decode_stage decoder_inst (
@@ -85,7 +95,9 @@
         .decode_pr_in(decode_out),
         .decode_pr_out(decode_pr_out),
         .id_exe_rs1(id_exe_rs1),
-        .id_exe_rs2(id_exe_rs2)
+        .id_exe_rs2(id_exe_rs2),
+        .id_exe_rd(id_exe_rd),
+        .id_exe_mem_read(id_exe_mem_read)
         );
     execute_stage execute_stage_inst(
         .exe_in(decode_pr_out),
@@ -135,7 +147,13 @@
         .fwd_1(fwd_1),
         .fwd_2(fwd_2)
     );
-    
+    hazard_detection_unit hazard_detection_unit_inst(
+        .if_id_rs1(if_id_rs1),
+        .if_id_rs2(if_id_rs2),
+        .id_exe_rd(id_exe_rd),
+        .id_exe_mem_read(id_exe_mem_read),
+        .load_use_stall(load_use_stall)
+    );
     endmodule
         
         

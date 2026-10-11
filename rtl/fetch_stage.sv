@@ -3,6 +3,7 @@ module fetch_stage (
     input logic         rst,
     input logic         PCsrc,
     input logic  [31:0] target_address,
+    input logic         load_use_stall, //hazard detection unit, causes stall
     output logic [31:0] PC_out,  //travels down the pipe to be used in EXE stage to calc PC+imm
     output logic [31:0] PC_plus_4,  //travels down the pipe to be used in WB stage to write PC+4 to register file
     output logic [31:0] instruction_in
@@ -18,6 +19,10 @@ always_ff @( posedge clk )
     begin 
             if(rst)
                     PC_out <= '0;
+            else if(load_use_stall)
+                    begin
+                        
+                    end
             else
                     PC_out<=PC_reg;
     end

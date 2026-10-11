@@ -1,20 +1,25 @@
-//addi x1, x0, 5
+//addi x2, x0, 32
+13
+01
+00
+02
+//addi x5, x0, 7
 93
+02
+70
 00
-50
+//sw x5, 0(x2)
+23
+20
+51
 00
-//nop
-13
+//lw x1, 0(x2)
+83
+20
+01
 00
-00
-00
-//nop
-13
-00
-00
-00
-//add x2, x1, x1
-33
+//add x3, x1, x1        (right behind the lw, so it stalls)
+B3
 81
 10
 00

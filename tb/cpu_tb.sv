@@ -24,6 +24,8 @@ module cpu_tb;
   repeat (80) @(posedge clk);
   $display("x1 = %h", dut.register_file_inst.reg_file[1]);
   $display("x2 = %h", dut.register_file_inst.reg_file[2]);
+  $display("x3 = %h", dut.register_file_inst.reg_file[3]);
+  $display("x5 = %h", dut.register_file_inst.reg_file[5]);
   $finish;
 
   end

@@ -5,7 +5,7 @@ import pipeline_types::*;
     input exe_bus_t mem_in,
     output mem_bus_t mem_out
 );
-logic [7:0] mem_ram [0:1023]; //1024 bytes. each byte is 8 bits. 
+logic [7:0] mem_ram [0:1023]; //1024 bytes. each byte is 8 bits. data memory
 logic        mem_read;
 logic        mem_write;
 logic [2:0]  fnct3;

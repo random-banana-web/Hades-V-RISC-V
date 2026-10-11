@@ -99,6 +99,7 @@
         .id_exe_rs2(id_exe_rs2),
         .id_exe_rd(id_exe_rd),
         .id_exe_mem_read(id_exe_mem_read),
+        .load_use_stall(load_use_stall),
         .PCsrc(PCsrc)
         );
     execute_stage execute_stage_inst(

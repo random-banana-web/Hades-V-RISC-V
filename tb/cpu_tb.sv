@@ -21,8 +21,15 @@ module cpu_tb;
 
     // let it run some cycles
 
-  repeat (80) @(posedge clk);
+  repeat (250) @(posedge clk);
+  $display("x1  = %h", dut.register_file_inst.reg_file[1]);
   $display("x3  = %h", dut.register_file_inst.reg_file[3]);
+  $display("x4  = %h", dut.register_file_inst.reg_file[4]);
+  $display("x5  = %h", dut.register_file_inst.reg_file[5]);
+  $display("x6  = %h", dut.register_file_inst.reg_file[6]);
+  $display("x7  = %h", dut.register_file_inst.reg_file[7]);
+  $display("x8  = %h", dut.register_file_inst.reg_file[8]);
+  $display("x9  = %h", dut.register_file_inst.reg_file[9]);
   $display("x10 = %h", dut.register_file_inst.reg_file[10]);
   $display("x11 = %h", dut.register_file_inst.reg_file[11]);
   $display("x12 = %h", dut.register_file_inst.reg_file[12]);
@@ -32,6 +39,7 @@ module cpu_tb;
   $display("x16 = %h", dut.register_file_inst.reg_file[16]);
   $display("x17 = %h", dut.register_file_inst.reg_file[17]);
   $display("x18 = %h", dut.register_file_inst.reg_file[18]);
+  $display("x19 = %h", dut.register_file_inst.reg_file[19]);
   $finish;
 
   end

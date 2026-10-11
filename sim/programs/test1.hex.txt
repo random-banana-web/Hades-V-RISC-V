@@ -1,70 +1,170 @@
-//addi x1, x0, 5
+//0   addi x1, x0, 64
 93
 00
-50
 00
-//addi x2, x0, 5
+04
+//4   addi x2, x0, 1
+13
+01
+10
+00
+//8   sw x2, 0(x1)
+23
+A0
+20
+00
+//12  addi x2, x0, 2
+13
+01
+20
+00
+//16  sw x2, 4(x1)
+23
+A2
+20
+00
+//20  addi x2, x0, 3
+13
+01
+30
+00
+//24  sw x2, 8(x1)
+23
+A4
+20
+00
+//28  addi x2, x0, 4
+13
+01
+40
+00
+//32  sw x2, 12(x1)
+23
+A6
+20
+00
+//36  addi x2, x0, 5
 13
 01
 50
 00
-//beq x1, x2, +12        (taken, skips the next two)
-63
-86
+//40  sw x2, 16(x1)
+23
+A8
 20
 00
-//addi x10, x0, 1        (skipped)
-13
-05
-10
-00
-//addi x11, x0, 1        (skipped)
+//44  addi x3, x0, 0        (sum)
 93
-05
-10
-00
-//addi x12, x0, 1        (branch target)
-13
-06
-10
-00
-//bne x1, x2, +12        (not taken, all three below run)
-63
-96
-20
-00
-//addi x13, x0, 1
-93
-06
-10
-00
-//addi x14, x0, 1
-13
-07
-10
-00
-//addi x15, x0, 1
-93
-07
-10
-00
-//jal x3, +12            (taken, skips the next two)
-EF
 01
+00
+00
+//48  addi x4, x0, 5        (count)
+13
+02
+50
+00
+//52  loop: lw x5, 0(x1)
+83
+A2
+00
+00
+//56  add x3, x3, x5        (load-use stall)
+B3
+81
+51
+00
+//60  addi x1, x1, 4
+93
+80
+40
+00
+//64  addi x4, x4, -1
+13
+02
+F2
+FF
+//68  bne x4, x0, loop      (offset -16)
+E3
+18
+02
+FE
+//72  addi x10, x0, 99      (runs after the loop falls through)
+13
+05
+30
+06
+//76  jal x6, +12           (target 88, x6 = 80)
+6F
+03
 C0
 00
-//addi x16, x0, 1        (skipped)
+//80  addi x11, x0, 1       (skipped)
+93
+05
+10
+00
+//84  addi x12, x0, 1       (skipped)
+13
+06
+10
+00
+//88  addi x13, x6, 0       (jal target, reads x6 while jal is in WB)
+93
+06
+03
+00
+//92  addi x8, x0, 104
+13
+04
+80
+06
+//96  jalr x7, 0(x8)        (target 104, x7 = 100)
+E7
+03
+04
+00
+//100 addi x14, x0, 1       (skipped)
+13
+07
+10
+00
+//104 addi x15, x0, 1       (jalr target)
+93
+07
+10
+00
+//108 addi x1, x0, 64
+93
+00
+00
+04
+//112 addi x16, x0, 1
 13
 08
 10
 00
-//addi x17, x0, 1        (skipped)
+//116 lw x9, 0(x1)
+83
+A4
+00
+00
+//120 beq x9, x16, +12      (stall, then forward; taken, target 132)
+63
+86
+04
+01
+//124 addi x17, x0, 1       (skipped)
 93
 08
 10
 00
-//addi x18, x0, 1        (jal target)
+//128 addi x18, x0, 1       (skipped)
 13
+09
+10
+00
+//132 addi x19, x0, 1       (beq target)
+93
 09
 10
 00

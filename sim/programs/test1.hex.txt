@@ -1,26 +1,71 @@
-//addi x2, x0, 32
+//addi x1, x0, 5
+93
+00
+50
+00
+//addi x2, x0, 5
 13
 01
+50
 00
-02
-//addi x5, x0, 7
+//beq x1, x2, +12        (taken, skips the next two)
+63
+86
+20
+00
+//addi x10, x0, 1        (skipped)
+13
+05
+10
+00
+//addi x11, x0, 1        (skipped)
 93
-02
-70
+05
+10
 00
-//sw x5, 0(x2)
-23
-20
-51
+//addi x12, x0, 1        (branch target)
+13
+06
+10
 00
-//lw x1, 0(x2)
-83
+//bne x1, x2, +12        (not taken, all three below run)
+63
+96
 20
+00
+//addi x13, x0, 1
+93
+06
+10
+00
+//addi x14, x0, 1
+13
+07
+10
+00
+//addi x15, x0, 1
+93
+07
+10
+00
+//jal x3, +12            (taken, skips the next two)
+EF
 01
+C0
 00
-//add x3, x1, x1        (right behind the lw, so it stalls)
-B3
-81
+//addi x16, x0, 1        (skipped)
+13
+08
+10
+00
+//addi x17, x0, 1        (skipped)
+93
+08
+10
+00
+//addi x18, x0, 1        (jal target)
+13
+09
 10
 00
 // 6 NOPs to drain

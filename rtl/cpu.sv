@@ -78,7 +78,8 @@
         .instruction_in_d(instruction_in_d),
         .load_use_stall(load_use_stall),
         .if_id_rs1(if_id_rs1),
-        .if_id_rs2(if_id_rs2)
+        .if_id_rs2(if_id_rs2),
+        .PCsrc(PCsrc)
 
     );
     decode_stage decoder_inst (
@@ -97,7 +98,8 @@
         .id_exe_rs1(id_exe_rs1),
         .id_exe_rs2(id_exe_rs2),
         .id_exe_rd(id_exe_rd),
-        .id_exe_mem_read(id_exe_mem_read)
+        .id_exe_mem_read(id_exe_mem_read),
+        .PCsrc(PCsrc)
         );
     execute_stage execute_stage_inst(
         .exe_in(decode_pr_out),

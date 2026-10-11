@@ -7,6 +7,7 @@ import pipeline_types::*;
     input  logic [31:0] PC_plus_4,
     input  logic [31:0] instruction_in,
     input logic         load_use_stall, //hazard detection unit, causes stall if 1
+    input logic         PCsrc, //used for control hazard 
     output logic [31:0] PC_out_d,
     output logic [31:0] PC_plus_4_d,
     output logic [31:0] instruction_in_d,  
@@ -21,11 +22,17 @@ import pipeline_types::*;
                     begin
                         PC_out_d<='0;
                         PC_plus_4_d<='0;
-                        instruction_in_d<='0;
+                        instruction_in_d<=32'h00000013;
                     end
                 else if(load_use_stall)
                     begin
                         //hold current values. stalled due to hazard detection unit
+                    end
+                else if(PCsrc)
+                    begin
+                        PC_out_d<='0;
+                        PC_plus_4_d<='0;    
+                        instruction_in_d<=32'h00000013; //equivalent to a NOP. we do this instead of rst since 0 is not a valid inst for ID to decode
                     end
                 else
                     begin

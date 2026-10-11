@@ -7,7 +7,7 @@
         input logic [31:0] write_data,      //coming in from wb output mux
         input logic [31:0] fwd_alu_result,  //coming in from exe-mem pr
         output exe_bus_t exe_out,
-        output logic        PCsrc,          //gets routed to fetch stage 
+        output logic        PCsrc,          //gets routed to fetch stage and used for control hazard resolving
         output logic [31:0] target_address //gets routed to fetch stage 
     );
     logic [31:0] alu_operand_A;

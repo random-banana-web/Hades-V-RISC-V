@@ -8,7 +8,7 @@ module cpu_tb;
   );
 
   always #5 clk = ~clk;
-
+always @(posedge clk)
   initial begin
     $dumpfile("waves.vcd");
     $dumpvars(0, cpu_tb);
@@ -20,7 +20,7 @@ module cpu_tb;
     rst = 0;
 
     // let it run some cycles
-
+ 
   repeat (250) @(posedge clk);
   $display("x1  = %h", dut.register_file_inst.reg_file[1]);
   $display("x3  = %h", dut.register_file_inst.reg_file[3]);
@@ -40,6 +40,8 @@ module cpu_tb;
   $display("x17 = %h", dut.register_file_inst.reg_file[17]);
   $display("x18 = %h", dut.register_file_inst.reg_file[18]);
   $display("x19 = %h", dut.register_file_inst.reg_file[19]);
+
+  
   $finish;
 
   end

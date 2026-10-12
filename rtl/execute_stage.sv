@@ -59,7 +59,7 @@
             4'b0100: alu_result_mainALU=alu_operand_A<alu_operand_B;//sltu
             4'b0101: alu_result_mainALU=alu_operand_A^alu_operand_B;//xor
             4'b0110: alu_result_mainALU=alu_operand_A>>alu_operand_B[4:0];//srl
-            4'b0111: alu_result_mainALU=$signed(alu_operand_A)>>alu_operand_B[4:0];//sra
+            4'b0111: alu_result_mainALU=$signed(alu_operand_A)>>>alu_operand_B[4:0];//sra
             4'b1000: alu_result_mainALU=alu_operand_A|alu_operand_B;//or
             4'b1001: alu_result_mainALU=alu_operand_A&alu_operand_B;//and
             default: alu_result_mainALU='x;
@@ -89,9 +89,13 @@
             3'b111:  branch_taken = ~less_than_u;        // bgeu
             default: branch_taken = 1'bx; 
         endcase
+        case (exe_in.alu_src) //routed to fetch stage
+        2'b01:   target_address = alu_result_mainALU;   // jalr: rs1 + imm
+        default: target_address = alu_result_sideALU;   // branches, jal: PC + imm
+        endcase
     end
     assign PCsrc = exe_in.jump | (exe_in.branch & branch_taken);
-    assign target_address=alu_result_sideALU; //routed to fetch stage
+    
     assign exe_out.alu_result=alu_result;
     assign exe_out.reg_write=exe_in.reg_write;
     assign exe_out.mem_read=exe_in.mem_read;

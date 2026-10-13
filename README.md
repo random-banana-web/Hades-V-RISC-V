@@ -43,7 +43,7 @@ Replace `<testbench>` with the testbench to run. It writes `waves.vcd`, which yo
 
 The main test program is a small array-sum loop, surrounded by jump cases and load-then-branch cases. Together they exercise the hazards that are most likely to go wrong: back-to-back data dependencies (forwarding), a load followed immediately by its consumer (load-use stall), and control-flow redirects.
 
-![waveform.gtkw](docs/waveform-load-use.png)
+![waveform](docs\waveform.png)
 
 ## Repository layout
 

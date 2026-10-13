@@ -4,6 +4,8 @@ Arnab Ghosh
 
 A 5-stage pipelined RV32I RISC-V CPU written from scratch in SystemVerilog, with data forwarding, load-use hazard detection, and control-flow handling. Simulated with Icarus Verilog and GTKWave. FPGA bring-up is the next goal.
 
+This is a passion project, built out of personal interest in computer architecture and digital design rather than as coursework for a class.
+
 ## Documents
 
 - [Control signal and ALU encoding reference](docs/control-encoding.md): the custom 4-bit `alu_control` encoding, control signals, forwarding encoding, and stall behavior
@@ -39,7 +41,10 @@ gtkwave waves.vcd
 
 Replace `<testbench>` with the testbench to run. It writes `waves.vcd`, which you can open in GTKWave to inspect the pipeline cycle by cycle.
 
-![waveform.gtkw](docs/waveform-load-use.pngC:\Users\Arnab\Downloads\HaDes-V-main\docs\waveform.gtkw)
+The main test program is a small array-sum loop, surrounded by jump cases and load-then-branch cases. Together they exercise the hazards that are most likely to go wrong: back-to-back data dependencies (forwarding), a load followed immediately by its consumer (load-use stall), and control-flow redirects.
+
+![waveform.gtkw](docs/waveform-load-use.png)
+
 ## Repository layout
 
 ```
@@ -55,9 +60,8 @@ Not started. The plan is FPGA bring-up after the simulation test coverage is com
 
 ## References
 
-- The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA
-<!-- Add the textbooks, courses, or other resources you learned from. -->
-
+- Sarah L. Harris and David Harris. *Digital Design and Computer Architecture: RISC-V Edition*. Morgan Kaufmann, 2021.
+- [Harris & Harris lecture playlist on YouTube](https://www.youtube.com/watch?v=lrN-uBKooRY&list=PLh8QClfSUTcbfTnKUz_uPOn-ghB4iqAhs&index=1), from the authors' own channel
 ## License
 
 MIT. See [LICENSE](LICENSE).

@@ -4,30 +4,27 @@ Arnab Ghosh
 
 A 5-stage pipelined RV32I RISC-V CPU written from scratch in SystemVerilog, with data forwarding, load-use hazard detection, and control-flow handling. Simulated with Icarus Verilog and GTKWave. FPGA bring-up is the next goal.
 
-This is a passion project, built out of personal interest in computer architecture and digital design rather than as coursework for a class.
+This is a passion project, built out of personal interest in computer architecture and digital design.
 
 ## Documents
 
-- [Control signal and ALU encoding reference](docs/control-encoding.md): the custom 4-bit `alu_control` encoding, control signals, forwarding encoding, and stall behavior
-- <!-- Add: supported instruction list, project report, or notes if you write them -->
+- [Control signal,forwarding encoding and ALU encoding reference](docs/control-encoding.md)
 
 ## Design
 
 | Feature          | Hades-V                                                        |
 | ---------------- | -------------------------------------------------------------- |
-| ISA              | RISC-V RV32I (no fence, ecall, ebreak, or CSRs)                |
+| ISA              | RISC-V RV32I                 |
 | Pipelining       | 5 stages: IF, ID, EX, MEM, WB                                  |
 | Data forwarding | EX/MEM and MEM/WB to the ALU operands, plus register file bypass in ID |
 | Hazard handling  | 1-cycle stall on load-use, bubble inserted into ID/EX          |
 | Control flow     | Branch and jump resolved in EX, `PCsrc` routed directly to fetch |
-| Cache            | none                                                           |
+| Cache            | not yet                                                         |
 | FPGA             | not yet                                                        |
 
 The datapath uses plain signal ports between modules instead of structs or packages, so every connection is visible at the module boundary.
 
-<!-- Add a pipeline diagram here, for example:
-![pipeline diagram](docs/pipeline.png)
-Showing forwarding paths and stall control in different colors makes it much easier to read. -->
+![Pipeline](docs/pipeline.png)
 
 ## Simulation
 
@@ -50,13 +47,13 @@ The main test program is a small array-sum loop, surrounded by jump cases and lo
 ```
 rtl/   synthesizable SystemVerilog sources
 tb/    testbenches
-sim/   simulation support files
+sim/   simulation instruction file
 docs/  design documentation
 ```
 
 ## Implementation
 
-Not started. The plan is FPGA bring-up after the simulation test coverage is complete. Board not yet chosen.
+Not started. 
 
 ## References
 

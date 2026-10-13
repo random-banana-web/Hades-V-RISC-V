@@ -22,7 +22,6 @@ This is a passion project, built out of personal interest in computer architectu
 | Cache            | not yet                                                         |
 | FPGA             | not yet                                                        |
 
-The datapath uses plain signal ports between modules instead of structs or packages, so every connection is visible at the module boundary.
 
 ![Pipeline](docs/pipeline.png)
 

@@ -8,7 +8,7 @@ module cpu_tb;
   );
 
   always #5 clk = ~clk;
-always @(posedge clk)
+
   initial begin
     $dumpfile("waves.vcd");
     $dumpvars(0, cpu_tb);

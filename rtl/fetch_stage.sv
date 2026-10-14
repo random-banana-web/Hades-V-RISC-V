@@ -36,6 +36,6 @@ always_comb begin
         1'b0: PC_next=PC_plus_4_wire;
         1'b1: PC_next=target_address;
     endcase
-    assign PC_reg=PC_next;
+     PC_reg=PC_next;
 end
 endmodule

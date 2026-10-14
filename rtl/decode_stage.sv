@@ -8,6 +8,23 @@
     input logic [31:0] PC_plus_4,
     output decode_bus_t decode_out
 );
+    logic [6:0] op_code;
+    logic [6:0]  fnct7; 
+    logic [4:0]  rs1;
+    logic [4:0]  rs2;
+    logic [4:0]  rd;
+    logic [31:0] imm;
+    logic [2:0]  fnct3;
+    logic        reg_write;
+    logic        mem_write;
+    logic        mem_read;
+    logic        jump;
+    logic        branch;
+    logic [1:0]  alu_src;
+    logic [3:0]  alu_control;
+    logic [1:0]  result_src;
+    logic        alu_result_src;
+    
     assign decode_out.rd1_out=rd1;
     assign decode_out.rd2_out=rd2;  
     assign decode_out.rd=rd;
@@ -28,22 +45,7 @@
     assign decode_out.PC_plus_4=PC_plus_4;
     
         
-    logic [6:0] op_code;
-    logic [6:0]  fnct7; 
-    logic [4:0]  rs1;
-    logic [4:0]  rs2;
-    logic [4:0]  rd;
-    logic [31:0] imm;
-    logic [2:0]  fnct3;
-    logic        reg_write;
-    logic        mem_write;
-    logic        mem_read;
-    logic        jump;
-    logic        branch;
-    logic [1:0]  alu_src;
-    logic [3:0]  alu_control;
-    logic [1:0]  result_src;
-    logic        alu_result_src;
+    
 instruction_decoder id_inst (
     .instruction_in(instruction_in),
     .fnct3(fnct3),

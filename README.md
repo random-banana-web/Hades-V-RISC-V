@@ -23,7 +23,8 @@ This is a passion project, built out of personal interest in computer architectu
 | FPGA             | not yet                                                        |
 
 
-![Pipeline](docs/pipeline.png)
+
+![CPU schematic](docs/schematic.png)
 
 ## Simulation
 

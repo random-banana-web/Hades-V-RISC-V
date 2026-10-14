@@ -25,7 +25,7 @@ This is a passion project, built out of personal interest in computer architectu
 
 
 ![CPU schematic](docs/schematic.png)
-
+## Module-level block diagram
 ## Simulation
 
 Toolchain: [Icarus Verilog](https://steveicarus.github.io/iverilog/) and [GTKWave](https://gtkwave.sourceforge.net/), with sources compiled using `-g2012`.
@@ -41,7 +41,7 @@ Replace `<testbench>` with the testbench to run. It writes `waves.vcd`, which yo
 The main test program is a small array-sum loop, surrounded by jump cases and load-then-branch cases. Together they exercise the hazards that are most likely to go wrong: back-to-back data dependencies (forwarding), a load followed immediately by its consumer (load-use stall), and control-flow redirects.
 
 ![waveform](docs/waveform.png)
-
+## Load-use stall and forwarding waveform
 ## Repository layout
 
 ```
